@@ -44,7 +44,49 @@ public class ExpressionTree{
 	return left != null && right != null;
     }
     //began writing here
-  
+    private double apply(char op, double a, double b) {
+	if (op == '+') {
+	    return a + b;
+	} else if (op == '*') {
+	    return a * b;
+	} else if (op == '/') {
+	    return a / b;
+	} else if (op == '%') {
+	    return a % b;
+	} else if(op == '-') {
+	    return a - b;
+	} else {
+	    return 0.0;
+	}
+    }
+    public double evaluate() {
+	if (isValue()) {
+	    return getValue();
+	} else {
+	    return apply(getOp(), getLeft().evaluate(), getRight().evaluate());
+	}
+    }
+    public String toString() {
+	if(isValue()) {
+	    return getValue() + "";
+	} else {
+	    return "(" +  getLeft().toString() + " " + getOp() + " " + getRight().toString() + ")";
+	}
+    }
+    public String toStringPostfix() {
+	if(isValue()) {
+	    return getValue() + "" ;
+	} else {
+	    return getLeft().toStringPostfix() + " " + getRight().toStringPostfix() + " " + getOp();
+	}
+    }
+    public String toStringPrefix() {
+	if(isValue()) {
+	    return getValue() + "";
+	} else {
+	    return  getOp() + " " + getLeft().toStringPrefix() + " " + getRight().toStringPrefix();
+	}
+    }
     public static void main(String[] args){
 	//ugly main sorry!
 	ExpressionTree a = new ExpressionTree(4.0);
